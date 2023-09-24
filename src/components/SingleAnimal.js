@@ -98,7 +98,6 @@ function SingleAnimal() {
   };
 
   const handleDateInfoChange = (e) => {
-    console.log('changed!', e);
     let multiplier = 1;
     if((e.target.value) === "bc") {
       console.log("entered");
@@ -186,7 +185,7 @@ function SingleAnimal() {
               placeholder="Extinction Date"
               name="extinction_date"
               onChange={handleChange}
-              value={Math.abs(data.extinction_date)}
+              value={(data.extinction_date === null  || data.extinction_date === "") ? "" : Math.abs(data.extinction_date)}
             ></input>
           </div>
           <div className="col-md-4">
