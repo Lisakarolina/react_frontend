@@ -29,7 +29,7 @@ function Overview() {
 
 
   return (
-    <div>
+    <div className="container">
         <div id="header"><h1>My Virtual Zoo</h1></div>
         <div>{hintState && (<div class="alert alert-success" role="alert">
   {`Entry has been ${hintState.hint}!`}

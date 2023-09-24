@@ -19,7 +19,7 @@ function CreateAnimal() {
         e.preventDefault();
         // prepare the data of the new animal
         data.weight = Number(
-          parseFloat(data.weight.replace(",", ".")).toFixed(3)
+          parseFloat((data.weight).toString().replace(",", ".")).toFixed(3)
         );
         if (data.extinction_date !== "") {
           if (data.dateInfo !== "" && data.dateInfo !== "DEFAULT") {
@@ -28,15 +28,19 @@ function CreateAnimal() {
                 ? parseInt(data.extinction_date) * -1
                 : parseInt(data.extinction_date);
           } else {
+            //if (data.extinction_date === "") data.extinction_date = null;
             data.extinction_date = parseInt(data.extinction_date);
           }
+        }
+        else {
+            data.extinction_date = null;
         }
         const response = await fetch("http://127.0.0.1:8000/api/new", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 201) {
           navigate("/", {
             state: { hint: "created" },
           });
@@ -112,17 +116,17 @@ function CreateAnimal() {
           <div className="col">
             <label htmlFor="extDate">Died out in Year</label>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-4">
             <input
               type="text"
               className="form-control"
               id="extDate"
               placeholder="Extinction Date"
-              name="extinctionDate"
+              name="extinction_date"
               onChange={handleChange}
             ></input>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-4">
             <select
               className=""
               id="inlineFormCustomSelect"
@@ -140,14 +144,14 @@ function CreateAnimal() {
         </button>
       </form>
       <div>
-        {/* {error &&
+        {error &&
           Object.keys(error).map(function (item, index) {
             return error[item].map((data) => (
               <div class="alert alert-danger" role="alert">
                 {`${item}: ${data}`}
               </div>
             ));
-          })} */}
+          })}
       </div>
     </div>
   );

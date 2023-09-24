@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   useNavigate,
-  useLocation,
   Route,
   Routes,
   useParams,
@@ -9,6 +8,7 @@ import {
 import { Form } from "reactstrap";
 
 function SingleAnimal() {
+  //let originalDateInfo = ""; 
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
   const { id } = useParams();
@@ -50,8 +50,7 @@ function SingleAnimal() {
     try {
       updateData(e);
     } catch (err) {
-      //console.error(err);
-      //setError(err.response.data.message)
+      console.error(err);
     }
   };
 
@@ -77,6 +76,7 @@ function SingleAnimal() {
         //animalEntry.extinction_date = animalEntry.extinction_date || '';
         console.log("this is the first fetched response: ", animalEntry);
         setData(animalEntry);
+        //originalDateInfo = animalEntry.extinction_date < 0 ? "bc" : "ad";
       }
       fetchAnimalEntry();
     } catch (err) {
@@ -97,19 +97,35 @@ function SingleAnimal() {
     console.log("new data", data);
   };
 
+  const handleDateInfoChange = (e) => {
+    console.log('changed!', e);
+    let multiplier = 1;
+    if((e.target.value) === "bc") {
+      console.log("entered");
+      multiplier = -1;
+      // make sure value is negative
+      /* let newExtinctionDate = -1 * Math.abs(data.extinction_date)
+      setData((data) => ({
+        ...data,
+        extinction_date: newExtinctionDate
+      })); */
+    }
+    
+    setData((data) => ({
+      ...data,
+      extinction_date: Math.abs(data.extinction_date) * multiplier,
+    }));
+  };
+
   function calculateExtinctionDate(date, dateInfo) {
     if (date !== "") {
       if (dateInfo !== "" && dateInfo !== "DEFAULT") {
-        date = dateInfo === "bc" ? parseInt(date) * -1 : parseInt(date);
-      } else {
-        date = parseInt(date);
+        return dateInfo === "bc" ? parseInt(date) * -1 : parseInt(date);
       }
+      return parseInt(date);
     }
-    console.log('date',date)
-    return date;
+    return null;
   }
-
-  //useEffect(() => postData, []);
 
   return (
     <div>
@@ -158,30 +174,34 @@ function SingleAnimal() {
             onChange={handleChange}
           ></textarea>
         </div>
-        <div className="col-auto my-1">
-          <label className="mr-sm-2" for="extDate">
-            Died out in Year
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            id="extDate"
-            value={data.extinction_date}
-            placeholder="Extinction Date"
-            name="extinction_date"
-            onChange={handleChange}
-          ></input>
-          <select
-            className="custom-select mr-sm-2"
-            id="inlineFormCustomSelect"
-            name="dateInfo"
-            value={data?.extinction_date < 0 ? "bc" : "ad"}
-            onChange={handleChange}
-          >
-            <option selected>Choose...</option>
-            <option value="bc">BC</option>
-            <option value="ad">AD</option>
-          </select>
+        <div className="row">
+          <div className="col">
+            <label htmlFor="extDate">Died out in Year</label>
+          </div>
+          <div className="col-md-4">
+            <input
+              type="text"
+              className="form-control"
+              id="extDate"
+              placeholder="Extinction Date"
+              name="extinction_date"
+              onChange={handleChange}
+              value={Math.abs(data.extinction_date)}
+            ></input>
+          </div>
+          <div className="col-md-4">
+            <select
+              className=""
+              id="inlineFormCustomSelect"
+              name="dateInfo"
+              onChange={handleDateInfoChange}
+              value={data.extinction_date < 0 ? "bc" : "ad"}
+            >
+              <option value="DEFAULT">Choose...</option>
+              <option value="bc">BC</option>
+              <option value="ad">AD</option>
+            </select>
+          </div>
         </div>
       </form>
       <div>
@@ -194,6 +214,7 @@ function SingleAnimal() {
             ));
           })}
       </div>
+      <div id="button-panel">
       <button
         type="submit"
         className="btn btn-primary"
@@ -203,7 +224,7 @@ function SingleAnimal() {
       </button>
       <button type="submit" className="btn btn-primary" onClick={deleteEntry}>
         Delete
-      </button>
+      </button></div>
     </div>
   );
 }
