@@ -12,7 +12,6 @@ function CreateAnimal() {
   });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  //const path = useLocation().pathname;
   const postData = async (e) => {
     try {
       async function postData(e) {
@@ -28,7 +27,6 @@ function CreateAnimal() {
                 ? parseInt(data.extinction_date) * -1
                 : parseInt(data.extinction_date);
           } else {
-            //if (data.extinction_date === "") data.extinction_date = null;
             data.extinction_date = parseInt(data.extinction_date);
           }
         }
@@ -47,8 +45,6 @@ function CreateAnimal() {
         } else {
             response.json().then((response) => setError(response));
         }
-
-        console.log(response);
       }
       postData(e);
     } catch (err) {
@@ -57,7 +53,6 @@ function CreateAnimal() {
   };
 
   const handleChange = (e) => {
-    console.log("changed!", e);
     const { name, value } = e.target;
     setData((data) => ({
       ...data,
@@ -65,8 +60,6 @@ function CreateAnimal() {
     }));
     console.log("new data", data);
   };
-
-  //useEffect(() => postData, []);
 
   return (
     <div>

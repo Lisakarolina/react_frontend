@@ -4,13 +4,10 @@ import SingleAnimal from "./SingleAnimal";
 import { Table } from "reactstrap";
 
 function Overview() {
-    //const [hint, setHint] = useState(null);
-    //setHint(useLocation().state);
     const {state} = useLocation();
     let hintState = state || null;
   const [allAnimals, setAllAnimals] = useState([]);
   const navigate = useNavigate();
-  //const path = useLocation().pathname;
   const getData = async () => {
     try {
       async function fetchEntries() {
@@ -47,9 +44,7 @@ function Overview() {
   <tbody>
         {allAnimals.map((item, i) => (
             <tr onClick={() => {
-                navigate(`${item.id}`, {
-                //   state: { data: item },
-                });
+                navigate(`${item.id}`);
               }}>
             <td>{item.id}</td>
             <td>{item.name}</td>

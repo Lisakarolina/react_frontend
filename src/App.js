@@ -12,7 +12,6 @@ function App() {
       <Route path="/" element={<Overview />} />
       <Route path=":id" element={<SingleAnimal />} />
       <Route path="/new" element={<CreateAnimal />} />
-      <Route path="/sort/weight" element={<Overview />} />
     </Routes>
   );
 }
