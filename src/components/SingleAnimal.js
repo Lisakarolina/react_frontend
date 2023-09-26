@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import {
   useNavigate,
-  Route,
-  Routes,
   useParams,
 } from "react-router-dom";
-import { Form } from "reactstrap";
 
 function SingleAnimal() {
   const [data, setData] = useState({});

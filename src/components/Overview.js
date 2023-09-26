@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
-import SingleAnimal from "./SingleAnimal";
-import { Table } from "reactstrap";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Overview() {
     const {state} = useLocation();

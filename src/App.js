@@ -1,6 +1,5 @@
 import './App.css';
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import SingleAnimal from "./components/SingleAnimal";
 import Overview from "./components/Overview";
 import CreateAnimal from './components/CreateAnimal';

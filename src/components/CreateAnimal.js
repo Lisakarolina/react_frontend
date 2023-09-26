@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
-import { Form } from "reactstrap";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CreateAnimal() {
   const [data, setData] = useState({
