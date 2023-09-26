@@ -8,7 +8,6 @@ import {
 import { Form } from "reactstrap";
 
 function SingleAnimal() {
-  //let originalDateInfo = ""; 
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
   const { id } = useParams();
@@ -42,10 +41,7 @@ function SingleAnimal() {
         });
       } else {
         response.json().then((response) => setError(response));
-        //console.log(response.json())
       }
-      //console.log('after put', response);
-      //setData(response.json())
     }
     try {
       updateData(e);
@@ -72,11 +68,7 @@ function SingleAnimal() {
       async function fetchAnimalEntry() {
         const response = await fetch(`http://127.0.0.1:8000/api/${id}`);
         const animalEntry = await response.json();
-        // make sure a null value is displayed correctly in the form
-        //animalEntry.extinction_date = animalEntry.extinction_date || '';
-        console.log("this is the first fetched response: ", animalEntry);
         setData(animalEntry);
-        //originalDateInfo = animalEntry.extinction_date < 0 ? "bc" : "ad";
       }
       fetchAnimalEntry();
     } catch (err) {
@@ -87,27 +79,18 @@ function SingleAnimal() {
   useEffect(() => getData, []);
 
   const handleChange = (e) => {
-    //console.log('changed!', e);
     const { name, value } = e.target;
     setData((data) => ({
       ...data,
       [name]: value,
     }));
-    //e.target.value = data[e.target.name];
-    console.log("new data", data);
   };
 
   const handleDateInfoChange = (e) => {
+    // make sure ac/bc date format is translated to regular integers
     let multiplier = 1;
     if((e.target.value) === "bc") {
-      console.log("entered");
       multiplier = -1;
-      // make sure value is negative
-      /* let newExtinctionDate = -1 * Math.abs(data.extinction_date)
-      setData((data) => ({
-        ...data,
-        extinction_date: newExtinctionDate
-      })); */
     }
     
     setData((data) => ({
