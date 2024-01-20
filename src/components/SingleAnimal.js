@@ -27,7 +27,7 @@ function SingleAnimal() {
         weight: correctWeight,
       }));
       console.log("data ready ?", data);
-      const response = await fetch(`http://127.0.0.1:8000/api/${data.id}/`, {
+      const response = await fetch(`http://127.0.0.1/api/${data.id}/`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -49,7 +49,7 @@ function SingleAnimal() {
 
   const deleteEntry = async (e) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/${data.id}/`, {
+      const response = await fetch(`http://127.0.0.1/api/${data.id}/`, {
         method: "DELETE",
       });
       navigate("/", {
@@ -57,23 +57,26 @@ function SingleAnimal() {
       });
     } catch (err) {
       console.error(err);
+      alert('An error occurred whith deleting the data.');
     }
   };
 
-  const getData = async () => {
+  useEffect(() => {
+    const getData = async () => {
     try {
       async function fetchAnimalEntry() {
-        const response = await fetch(`http://127.0.0.1:8000/api/${id}`);
+        const response = await fetch(`http://127.0.0.1/api/${id}`);
         const animalEntry = await response.json();
         setData(animalEntry);
       }
       fetchAnimalEntry();
     } catch (err) {
       console.error(err);
+      alert('An error occurred while fetching the data.')
     }
   };
-
-  useEffect(() => getData, []);
+  getData();
+}, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

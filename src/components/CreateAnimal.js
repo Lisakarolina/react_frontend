@@ -32,7 +32,7 @@ function CreateAnimal() {
         else {
             data.extinction_date = null;
         }
-        const response = await fetch("http://127.0.0.1:8000/api/new", {
+        const response = await fetch("http://127.0.0.1/api/new", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),

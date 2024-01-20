@@ -6,28 +6,34 @@ function Overview() {
     let hintState = state || null;
   const [allAnimals, setAllAnimals] = useState([]);
   const navigate = useNavigate();
-  const getData = async () => {
+  
+
+  useEffect(() => {
+    const getData = async () => {
     try {
       async function fetchEntries() {
-        const response = await fetch("http://127.0.0.1:8000/api/");
+        const response = await fetch("http://127.0.0.1/api/");
         const entries = await response.json();
-        console.log("this is the response: ", entries);
         setAllAnimals(entries);
       }
       fetchEntries();
     } catch (err) {
       console.error(err);
-    }
+    };
+    
   };
-
-  useEffect(() => getData, []);
+  getData();
+}, []);
 
 
   return (
     <div className="container">
         <div id="header"><h1>My Virtual Zoo</h1></div>
-        <div>{hintState && (<div class="alert alert-success" role="alert">
-  {`Entry has been ${hintState.hint}!`}
+        <div>{hintState && (<div class="alert alert-success alert-dismissible fade show" role="alert">
+        {`Entry has been ${hintState.hint}!`}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button> 
 </div>)}</div>
         <table id="overview-table" class="table table-striped">
   <thead class="thead-dark">
